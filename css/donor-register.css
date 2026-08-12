@@ -1,0 +1,395 @@
+/* =========================================
+   BLOODLINK DONOR REGISTRATION
+   Desktop Version
+   ========================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+
+  background-color: #fff1f3;
+
+  color: #111827;
+
+  min-height: 100vh;
+}
+
+/* =========================================
+   REGISTRATION PAGE
+   ========================================= */
+
+.register-page {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: flex-start;
+
+  padding: 40px 60px;
+}
+
+/* =========================================
+   REGISTRATION CARD
+   ========================================= */
+
+.register-card {
+  width: 100%;
+  max-width: 1100px;
+
+  background-color: #ffffff;
+
+  padding: 35px 55px;
+
+  border-radius: 12px;
+
+  box-shadow: 0 4px 18px rgba(17, 24, 39, 0.08);
+}
+
+/* =========================================
+   LOGO
+   ========================================= */
+
+.logo {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.logo img {
+  width: 180px;
+
+  height: auto;
+
+  display: block;
+}
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.register-header {
+  text-align: center;
+
+  margin-bottom: 35px;
+}
+
+.register-header h1 {
+  font-size: 30px;
+
+  margin-bottom: 10px;
+
+  color: #111827;
+}
+
+.register-header p {
+  color: #6b7280;
+
+  font-size: 15px;
+}
+
+/* =========================================
+   FORM SECTION
+   ========================================= */
+
+.form-section {
+  margin-bottom: 30px;
+
+  padding-bottom: 25px;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.form-section:last-of-type {
+  border-bottom: none;
+}
+
+.form-section h2 {
+  font-size: 19px;
+
+  margin-bottom: 20px;
+
+  color: #d90429;
+}
+
+/* =========================================
+   TWO COLUMN ROW
+   ========================================= */
+
+.form-row {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 20px;
+}
+
+/* =========================================
+   FORM GROUP
+   ========================================= */
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: #111827;
+}
+
+.form-group label span {
+  color: #d90429;
+}
+
+/* =========================================
+   INPUTS
+   ========================================= */
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  background-color: #ffffff;
+
+  color: #111827;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+  height: 50px;
+
+  padding: 0 14px;
+}
+
+.form-group textarea {
+  min-height: 90px;
+
+  padding: 14px;
+
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #d90429;
+
+  box-shadow: 0 0 0 3px rgba(217, 4, 41, 0.1);
+}
+
+/* =========================================
+   FIELD HELP
+   ========================================= */
+
+.field-help {
+  display: block;
+
+  margin-top: 6px;
+
+  color: #6b7280;
+
+  font-size: 12px;
+
+  line-height: 1.4;
+}
+
+/* =========================================
+   NEVER DONATED CHECKBOX
+   ========================================= */
+
+.checkbox-group {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin-top: -5px;
+
+  margin-bottom: 10px;
+}
+
+.checkbox-group input {
+  width: 16px;
+
+  height: 16px;
+
+  accent-color: #d90429;
+
+  cursor: pointer;
+}
+
+.checkbox-group label {
+  font-size: 14px;
+
+  color: #374151;
+
+  cursor: pointer;
+}
+
+/* =========================================
+   PASSWORD
+   ========================================= */
+
+.password-box {
+  position: relative;
+}
+
+.password-box input {
+  padding-right: 70px;
+}
+
+.show-password {
+  position: absolute;
+
+  right: 12px;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  border: none;
+
+  background: transparent;
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.show-password:hover {
+  color: #d90429;
+}
+
+/* =========================================
+   VALIDATION
+   ========================================= */
+
+.input-error {
+  border-color: #d90429 !important;
+
+  background-color: #fff7f8 !important;
+}
+
+.input-success {
+  border-color: #15803d !important;
+}
+
+.error-message {
+  display: none;
+
+  margin-top: 6px;
+
+  color: #d90429;
+
+  font-size: 12px;
+
+  line-height: 1.4;
+}
+
+.error-message.show {
+  display: block;
+}
+
+/* =========================================
+   REGISTER BUTTON
+   ========================================= */
+
+.register-button {
+  width: 100%;
+
+  height: 52px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background-color: #d90429;
+
+  color: #ffffff;
+
+  font-size: 16px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.register-button:hover {
+  background-color: #9d0208;
+}
+
+/* =========================================
+   DESKTOP ONLY
+   ========================================= */
+
+.desktop-message {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .register-page {
+    display: none;
+  }
+
+  .desktop-message {
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    padding: 40px;
+  }
+
+  .desktop-message h2 {
+    color: #d90429;
+
+    margin-bottom: 10px;
+  }
+
+  .desktop-message p {
+    color: #6b7280;
+  }
+}
