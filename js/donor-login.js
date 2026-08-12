@@ -1,38 +1,49 @@
+/*BLOODLINK DONOR LOGIN VALIDATION*/
+
 document.addEventListener("DOMContentLoaded", function () {
+  /* Get form elements */
+
   const loginForm = document.getElementById("donorLoginForm");
 
-  const usernameInput = document.getElementById("username");
-  const passwordInput = document.getElementById("password");
+  const username = document.getElementById("username");
+
+  const password = document.getElementById("password");
 
   const usernameError = document.getElementById("usernameError");
+
   const passwordError = document.getElementById("passwordError");
 
   const togglePassword = document.getElementById("togglePassword");
 
-  /* SHOW / HIDE PASSWORD */
+  /*SHOW / HIDE PASSWOR*/
 
   togglePassword.addEventListener("click", function () {
-    if (passwordInput.type === "password") {
-      passwordInput.type = "text";
+    if (password.type === "password") {
+      password.type = "text";
+
       togglePassword.textContent = "Hide";
     } else {
-      passwordInput.type = "password";
+      password.type = "password";
+
       togglePassword.textContent = "Show";
     }
   });
 
-  /*USERNAME VALIDATION*/
+  /*USERNAME VALIDATIO*/
 
   function validateUsername() {
-    const username = usernameInput.value.trim();
+    const value = username.value.trim();
 
-    usernameInput.classList.remove("input-error", "input-success");
+    username.classList.remove("input-error", "input-success");
 
     usernameError.textContent = "";
+
     usernameError.classList.remove("show");
 
-    if (username === "") {
-      usernameInput.classList.add("input-error");
+    /* Empty username */
+
+    if (value === "") {
+      username.classList.add("input-error");
 
       usernameError.textContent = "Please enter your username.";
 
@@ -41,8 +52,10 @@ document.addEventListener("DOMContentLoaded", function () {
       return false;
     }
 
-    if (username.length < 3) {
-      usernameInput.classList.add("input-error");
+    /* Minimum length */
+
+    if (value.length < 3) {
+      username.classList.add("input-error");
 
       usernameError.textContent =
         "Username must contain at least 3 characters.";
@@ -52,8 +65,10 @@ document.addEventListener("DOMContentLoaded", function () {
       return false;
     }
 
-    if (username.length > 50) {
-      usernameInput.classList.add("input-error");
+    /* Maximum length */
+
+    if (value.length > 50) {
+      username.classList.add("input-error");
 
       usernameError.textContent = "Username cannot exceed 50 characters.";
 
@@ -62,8 +77,12 @@ document.addEventListener("DOMContentLoaded", function () {
       return false;
     }
 
-    if (!/^[A-Za-z0-9._-]+$/.test(username)) {
-      usernameInput.classList.add("input-error");
+    /* Allowed characters */
+
+    const usernamePattern = /^[A-Za-z0-9._-]+$/;
+
+    if (!usernamePattern.test(value)) {
+      username.classList.add("input-error");
 
       usernameError.textContent =
         "Username can contain only letters, numbers, dot, underscore, or hyphen.";
@@ -73,7 +92,9 @@ document.addEventListener("DOMContentLoaded", function () {
       return false;
     }
 
-    usernameInput.classList.add("input-success");
+    /* Valid */
+
+    username.classList.add("input-success");
 
     return true;
   }
@@ -81,15 +102,18 @@ document.addEventListener("DOMContentLoaded", function () {
   /*PASSWORD VALIDATION*/
 
   function validatePassword() {
-    const password = passwordInput.value;
+    const value = password.value;
 
-    passwordInput.classList.remove("input-error", "input-success");
+    password.classList.remove("input-error", "input-success");
 
     passwordError.textContent = "";
+
     passwordError.classList.remove("show");
 
-    if (password === "") {
-      passwordInput.classList.add("input-error");
+    /* Empty password */
+
+    if (value === "") {
+      password.classList.add("input-error");
 
       passwordError.textContent = "Please enter your password.";
 
@@ -98,8 +122,10 @@ document.addEventListener("DOMContentLoaded", function () {
       return false;
     }
 
-    if (password.length < 8) {
-      passwordInput.classList.add("input-error");
+    /* Minimum password length */
+
+    if (value.length < 8) {
+      password.classList.add("input-error");
 
       passwordError.textContent =
         "Password must contain at least 8 characters.";
@@ -109,8 +135,10 @@ document.addEventListener("DOMContentLoaded", function () {
       return false;
     }
 
-    if (password.length > 72) {
-      passwordInput.classList.add("input-error");
+    /* Maximum password length */
+
+    if (value.length > 72) {
+      password.classList.add("input-error");
 
       passwordError.textContent = "Password cannot exceed 72 characters.";
 
@@ -119,43 +147,53 @@ document.addEventListener("DOMContentLoaded", function () {
       return false;
     }
 
-    passwordInput.classList.add("input-success");
+    /* Valid */
+
+    password.classList.add("input-success");
 
     return true;
   }
 
-  /* LIVE VALIDATION  */
+  /*VALIDATE WHEN LEAVING INPUT*/
 
-  usernameInput.addEventListener("input", function () {
-    if (usernameInput.value !== "") {
+  username.addEventListener("blur", validateUsername);
+
+  password.addEventListener("blur", validatePassword);
+
+  /*LIVE VALIDATION*/
+
+  username.addEventListener("input", function () {
+    if (username.value.trim() !== "") {
       validateUsername();
     }
   });
 
-  passwordInput.addEventListener("input", function () {
-    if (passwordInput.value !== "") {
+  password.addEventListener("input", function () {
+    if (password.value !== "") {
       validatePassword();
     }
   });
 
-  /*BLUR VALIDATION */
-
-  usernameInput.addEventListener("blur", validateUsername);
-
-  passwordInput.addEventListener("blur", validatePassword);
-
-  /* FORM SUBMIT */
+  /*FORM SUBMIT*/
 
   loginForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
     const usernameValid = validateUsername();
+
     const passwordValid = validatePassword();
+
+    /* Stop if validation fails */
 
     if (!usernameValid || !passwordValid) {
       return;
     }
 
-    alert("Validation successful.");
+    /*
+               Database login authentication
+               will be added later.
+            */
+
+    alert("Form validation successful.");
   });
 });
