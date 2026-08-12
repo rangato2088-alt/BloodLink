@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 12, 2026 at 04:01 PM
+-- Generation Time: Aug 12, 2026 at 05:29 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -58,6 +58,8 @@ CREATE TABLE `donation_history` (
 CREATE TABLE `donor` (
   `Donor_ID` int(10) UNSIGNED NOT NULL,
   `Full_Name` varchar(100) NOT NULL,
+  `Username` varchar(100) NOT NULL,
+  `Password_Hash` varchar(255) NOT NULL,
   `Blood_Group` enum('A+','A-','B+','B-','AB+','AB-','O+','O-') NOT NULL,
   `Date_Of_Birth` date NOT NULL,
   `Gender` enum('Male','Female','Other') NOT NULL,
@@ -180,6 +182,7 @@ ALTER TABLE `donation_history`
 --
 ALTER TABLE `donor`
   ADD PRIMARY KEY (`Donor_ID`),
+  ADD UNIQUE KEY `Username` (`Username`),
   ADD UNIQUE KEY `Email` (`Email`);
 
 --
