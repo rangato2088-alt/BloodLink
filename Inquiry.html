@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>User Inquiry | Blood Donation System</title>
+
+    <link rel="stylesheet" href="Inquiry.css">
+</head>
+
+<body>
+
+    <!-- Main Section -->
+    <main class="container">
+
+        <!-- Left Side -->
+        <section class="info-section">
+
+            <span class="small-title">GET IN TOUCH</span>
+
+            <h1>How Can We Help You?</h1>
+
+            <p>
+                Have a question about blood donation, donor registration,
+                blood availability, or our services?
+            </p>
+
+            <p>
+                Send us your inquiry and our team will be happy to assist you.
+            </p>
+
+            <div class="info-card">
+                <h3><span aria-hidden="true">&#x1FA78;</span> Blood Donation Support</h3>
+                <p>
+                    Please provide clear information so we can understand
+                    your inquiry correctly.
+                </p>
+            </div>
+
+            <div class="emergency-box">
+                <strong>Important</strong>
+                <p>
+                    Do not use this form for medical emergencies.
+                    Please contact the relevant hospital or emergency service directly.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- Inquiry Form -->
+        <section class="form-section" id="inquiry">
+
+            <div class="form-header">
+                <h2>Send an Inquiry</h2>
+                <p>Fill in the form below.</p>
+                <div id="formStatus" class="form-status" role="status" hidden></div>
+            </div>
+
+            <form
+                id="inquiryForm"
+                action="process_inquiry.php"
+                method="POST"
+                novalidate
+                accept-charset="UTF-8"
+            >
+
+                <!-- Name -->
+                <div class="form-group">
+                    <label for="name">
+                        Full Name <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        autocomplete="name"
+                        maxlength="80"
+                        required
+                    >
+
+                    <small class="error" id="nameError"></small>
+                </div>
+
+
+                <!-- Email and Phone -->
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label for="email">
+                            Email Address <span>*</span>
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="example@gmail.com"
+                            autocomplete="email"
+                            maxlength="254"
+                            required
+                        >
+
+                        <small class="error" id="emailError"></small>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="phone">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="07XXXXXXXX"
+                            maxlength="10"
+                            inputmode="numeric"
+                            autocomplete="tel"
+                        >
+
+                        <small class="error" id="phoneError"></small>
+                    </div>
+
+                </div>
+
+
+                <!-- Inquiry Type -->
+                <div class="form-group">
+
+                    <label for="inquiryType">
+                        Inquiry Type <span>*</span>
+                    </label>
+
+                    <select id="inquiryType" name="inquiry_type" required>
+
+                        <option value="">
+                            -- Select Inquiry Type --
+                        </option>
+
+                        <option value="General Inquiry">
+                            General Inquiry
+                        </option>
+
+                        <option value="Donor Registration">
+                            Donor Registration
+                        </option>
+
+                        <option value="Donation Information">
+                            Donation Information
+                        </option>
+
+                        <option value="Blood Availability">
+                            Blood Availability
+                        </option>
+
+                        <option value="Eligibility Question">
+                            Donor Eligibility Question
+                        </option>
+
+                        <option value="Hospital Information">
+                            Hospital Information
+                        </option>
+
+                        <option value="Emergency Request Information">
+                            Emergency Request Information
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                    <small
+                        class="error"
+                        id="inquiryTypeError">
+                    </small>
+
+                </div>
+
+
+                <!-- Subject -->
+                <div class="form-group">
+
+                    <label for="subject">
+                        Subject <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        placeholder="Enter inquiry subject"
+                        maxlength="100"
+                        required
+                    >
+
+                    <small class="error" id="subjectError"></small>
+
+                </div>
+
+
+                <!-- Message -->
+                <div class="form-group">
+
+                    <label for="message">
+                        Message <span>*</span>
+                    </label>
+
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="6"
+                        maxlength="500"
+                        placeholder="Write your inquiry here..."
+                        required
+                    ></textarea>
+
+                    <div class="message-info">
+                        <small
+                            class="error"
+                            id="messageError">
+                        </small>
+
+                        <small id="charCount">
+                            0 / 500
+                        </small>
+                    </div>
+
+                </div>
+
+
+                <!-- Agreement -->
+                <div class="checkbox-group">
+
+                    <input
+                        type="checkbox"
+                        id="agreement"
+                        name="agreement"
+                        value="yes"
+                    >
+
+                    <label for="agreement">
+                        I confirm that the information provided is correct.
+                    </label>
+
+                </div>
+
+                <small
+                    class="error"
+                    id="agreementError">
+                </small>
+
+
+                <!-- Submit -->
+                <button type="submit" class="submit-btn" id="submitButton">
+                    <span class="button-label">Send Inquiry</span>
+                    <span aria-hidden="true">&rarr;</span>
+                </button>
+
+            </form>
+
+        </section>
+
+    </main>
+
+
+    <script src="Inquiry.js" defer></script>
+
+</body>
+</html>
