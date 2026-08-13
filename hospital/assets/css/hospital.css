@@ -1,0 +1,144 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #fff4f6;
+    min-height: 100vh;
+}
+
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 540px;
+    background-color: #ffffff;
+    padding: 45px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+}
+
+.login-logo {
+    display: block;
+    width: 150px;
+    height: auto;
+    margin: 0 auto 15px;
+}
+
+.login-subtitle {
+    text-align: center;
+    color: #777777;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.login-box h2 {
+    text-align: center;
+    color: #222222;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #222222;
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #d5d5d5;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: #b30000;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background-color: #b30000;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.login-box button:hover {
+    background-color: #8f0000;
+}
+
+.register-section {
+    text-align: center;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid #eeeeee;
+}
+
+.register-section p {
+    color: #777777;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.register-btn {
+    display: inline-block;
+    padding: 11px 22px;
+    border: 1px solid #b30000;
+    border-radius: 7px;
+    color: #b30000;
+    background-color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.register-btn:hover {
+    background-color: #b30000;
+    color: #ffffff;
+}
+
+.registration-error {
+    margin-bottom: 20px;
+    padding: 12px;
+    border-radius: 7px;
+    background-color: #ffe5e5;
+    color: #b30000;
+    font-size: 14px;
+}
+
+.registration-success {
+    margin-bottom: 20px;
+    padding: 12px;
+    border-radius: 7px;
+    background-color: #e8f7e8;
+    color: #267326;
+    font-size: 14px;
+}
+
+.form-section-title {
+    margin: 25px 0 20px;
+    color: #222222;
+    font-size: 20px;
+}
