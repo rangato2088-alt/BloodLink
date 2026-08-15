@@ -393,3 +393,113 @@ body {
     color: #6b7280;
   }
 }
+
+/* =========================================
+   SUCCESS POPUP
+   ========================================= */
+
+.success-popup-overlay {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgba(17, 24, 39, 0.6);
+
+  z-index: 99999;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+}
+
+.success-popup {
+  width: 420px;
+  max-width: 100%;
+
+  background-color: #ffffff;
+
+  border-radius: 16px;
+
+  padding: 40px;
+
+  text-align: center;
+
+  box-shadow: 0 20px 50px rgba(17, 24, 39, 0.25);
+
+  box-sizing: border-box;
+}
+
+.success-icon {
+  width: 60px;
+  height: 60px;
+
+  margin: 0 auto 20px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  background-color: #e8f7ee;
+
+  color: #198754;
+
+  font-size: 30px;
+
+  font-weight: bold;
+}
+
+.success-popup h2 {
+  margin: 0 0 12px;
+
+  font-size: 23px;
+
+  color: #111827;
+}
+
+.success-popup p {
+  margin: 0 0 25px;
+
+  color: #6b7280;
+
+  font-size: 15px;
+
+  line-height: 1.5;
+}
+
+.success-ok-button {
+  width: 100%;
+
+  height: 48px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background-color: #d90429;
+
+  color: #ffffff;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.success-ok-button:hover {
+  background-color: #9d0208;
+}

@@ -1,5 +1,201 @@
 <?php
-// BloodLink Donor Registration
+
+require_once "../config/database.php";
+
+$successMessage = "";
+$errorMessage = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $fullName = trim($_POST["full_name"] ?? "");
+    $username = trim($_POST["username"] ?? "");
+    $password = $_POST["password"] ?? "";
+    $confirmPassword = $_POST["confirm_password"] ?? "";
+    $bloodGroup = $_POST["blood_group"] ?? "";
+    $dateOfBirth = $_POST["date_of_birth"] ?? "";
+    $gender = $_POST["gender"] ?? "";
+    $address = trim($_POST["address"] ?? "");
+    $email = trim($_POST["email"] ?? "");
+    $phoneNumber = trim($_POST["phone_number"] ?? "");
+    $lastDonationDate = $_POST["last_donation_date"] ?? "";
+    $neverDonated = isset($_POST["never_donated"]);
+
+
+    /* =========================================
+       BASIC VALIDATION
+       ========================================= */
+
+    if (
+        $fullName === "" ||
+        $username === "" ||
+        $password === "" ||
+        $bloodGroup === "" ||
+        $dateOfBirth === "" ||
+        $gender === ""
+    ) {
+
+        $errorMessage = "Please complete all required fields.";
+
+    } elseif (strlen($username) < 4) {
+
+        $errorMessage = "Username must contain at least 4 characters.";
+
+    } elseif (strlen($password) < 8) {
+
+        $errorMessage = "Password must contain at least 8 characters.";
+
+    } elseif ($password !== $confirmPassword) {
+
+        $errorMessage = "Passwords do not match.";
+
+    } else {
+
+        /* =========================================
+           CHECK USERNAME
+           ========================================= */
+
+        $checkUsername = $conn->prepare(
+            "SELECT Donor_ID FROM donor WHERE Username = ?"
+        );
+
+        $checkUsername->bind_param(
+            "s",
+            $username
+        );
+
+        $checkUsername->execute();
+
+        $usernameResult =
+            $checkUsername->get_result();
+
+
+        if ($usernameResult->num_rows > 0) {
+
+            $errorMessage =
+                "This username is already registered.";
+
+        } else {
+
+            /* =========================================
+               CHECK EMAIL
+               ========================================= */
+
+            if ($email !== "") {
+
+                $checkEmail = $conn->prepare(
+                    "SELECT Donor_ID FROM donor WHERE Email = ?"
+                );
+
+                $checkEmail->bind_param(
+                    "s",
+                    $email
+                );
+
+                $checkEmail->execute();
+
+                $emailResult =
+                    $checkEmail->get_result();
+
+
+                if ($emailResult->num_rows > 0) {
+
+                    $errorMessage =
+                        "This email address is already registered.";
+
+                }
+
+            }
+
+
+            /* =========================================
+               CREATE ACCOUNT
+               ========================================= */
+
+            if ($errorMessage === "") {
+
+                $passwordHash =
+                    password_hash(
+                        $password,
+                        PASSWORD_DEFAULT
+                    );
+
+
+                /*
+                 * If the donor has never donated,
+                 * save NULL instead of an empty date.
+                 */
+
+                if ($neverDonated) {
+
+                    $lastDonationValue = null;
+
+                } else {
+
+                    $lastDonationValue = $lastDonationDate;
+
+                }
+
+
+                $sql = "
+                    INSERT INTO donor
+                    (
+                        Full_Name,
+                        Username,
+                        Password_Hash,
+                        Blood_Group,
+                        Date_Of_Birth,
+                        Gender,
+                        Address,
+                        Email,
+                        Phone_Number,
+                        Last_Donation_Date
+                    )
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ";
+
+
+                $stmt = $conn->prepare($sql);
+
+
+                $stmt->bind_param(
+                    "ssssssssss",
+                    $fullName,
+                    $username,
+                    $passwordHash,
+                    $bloodGroup,
+                    $dateOfBirth,
+                    $gender,
+                    $address,
+                    $email,
+                    $phoneNumber,
+                    $lastDonationValue
+                );
+
+
+                if ($stmt->execute()) {
+
+                    $successMessage =
+                        "Your donor account has been created successfully.";
+
+                } else {
+
+                    $errorMessage =
+                        "Unable to create your account. Please try again.";
+
+                }
+
+                $stmt->close();
+
+            }
+
+        }
+
+        $checkUsername->close();
+
+    }
+
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -62,12 +258,164 @@
 
             </div>
 
+            <?php if ($successMessage !== ""): ?>
+
+<style>
+    #successPopup {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+
+        background: rgba(17, 24, 39, 0.65) !important;
+
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+
+        z-index: 999999 !important;
+
+        padding: 20px !important;
+        margin: 0 !important;
+
+        box-sizing: border-box !important;
+    }
+
+    #successPopupBox {
+        width: 430px !important;
+        max-width: 90vw !important;
+
+        background: #ffffff !important;
+
+        border-radius: 16px !important;
+
+        padding: 40px !important;
+
+        text-align: center !important;
+
+        box-sizing: border-box !important;
+
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.30) !important;
+    }
+
+    #successPopupIcon {
+        width: 65px !important;
+        height: 65px !important;
+
+        margin: 0 auto 20px !important;
+
+        border-radius: 50% !important;
+
+        background: #e8f7ee !important;
+
+        color: #198754 !important;
+
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+
+        font-size: 32px !important;
+        font-weight: bold !important;
+    }
+
+    #successPopupBox h2 {
+        margin: 0 0 12px 0 !important;
+
+        color: #111827 !important;
+
+        font-family: Arial, Helvetica, sans-serif !important;
+
+        font-size: 24px !important;
+
+        font-weight: 700 !important;
+    }
+
+    #successPopupBox p {
+        margin: 0 0 25px 0 !important;
+
+        color: #6b7280 !important;
+
+        font-family: Arial, Helvetica, sans-serif !important;
+
+        font-size: 15px !important;
+
+        line-height: 1.6 !important;
+    }
+
+    #successOkButton {
+        width: 100% !important;
+        height: 48px !important;
+
+        border: none !important;
+        border-radius: 8px !important;
+
+        background: #d90429 !important;
+
+        color: #ffffff !important;
+
+        font-family: Arial, Helvetica, sans-serif !important;
+
+        font-size: 16px !important;
+        font-weight: 700 !important;
+
+        cursor: pointer !important;
+
+        transition: background 0.2s ease !important;
+    }
+
+    #successOkButton:hover {
+        background: #9d0208 !important;
+    }
+</style>
+
+
+<div id="successPopup">
+
+    <div id="successPopupBox">
+
+        <div id="successPopupIcon">
+            ✓
+        </div>
+
+        <h2>
+            Donor Account Created
+        </h2>
+
+        <p>
+            Your BloodLink donor account has been created successfully.
+        </p>
+
+        <button
+            type="button"
+            id="successOkButton">
+
+            OK
+
+        </button>
+
+    </div>
+
+</div>
+
+<?php endif; ?>
+
+
+            <?php if ($errorMessage !== ""): ?>
+
+                <div class="error-message">
+                    <?php echo htmlspecialchars($errorMessage); ?>
+            </div>
+
+        <?php endif; ?>
+
 
             <!-- Registration Form -->
 
             <form
                 id="donorRegisterForm"
                 method="POST"
+                action=""
                 novalidate>
 
 
@@ -467,9 +815,31 @@
         </div>
 
     </main>
-
-
+    
     <script src="../js/donor-register.js"></script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const successOkButton =
+            document.getElementById("successOkButton");
+
+        if (successOkButton) {
+
+            successOkButton.addEventListener("click", function () {
+
+                window.location.href = "../index.php";
+
+            });
+
+        }
+
+    });
+</script>
+
+
+</body>
+</html>
 
 </body>
 

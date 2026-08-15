@@ -3,16 +3,15 @@
    ========================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
-  /* Get form elements */
+  /* =========================================
+       GET FORM ELEMENTS
+       ========================================= */
 
   const form = document.getElementById("donorRegisterForm");
 
   const fullName = document.getElementById("fullName");
-
   const dateOfBirth = document.getElementById("dateOfBirth");
-
   const gender = document.getElementById("gender");
-
   const bloodGroup = document.getElementById("bloodGroup");
 
   const lastDonationDate = document.getElementById("lastDonationDate");
@@ -20,47 +19,53 @@ document.addEventListener("DOMContentLoaded", function () {
   const neverDonated = document.getElementById("neverDonated");
 
   const email = document.getElementById("email");
-
   const phoneNumber = document.getElementById("phoneNumber");
 
   const username = document.getElementById("username");
-
   const password = document.getElementById("password");
-
   const confirmPassword = document.getElementById("confirmPassword");
 
   const togglePassword = document.getElementById("togglePassword");
 
   /* =========================================
+       CHECK FORM
+       ========================================= */
+
+  if (!form) {
+    console.error("Donor registration form was not found.");
+    return;
+  }
+
+  /* =========================================
        SHOW / HIDE PASSWORD
        ========================================= */
 
-  togglePassword.addEventListener("click", function () {
-    if (password.type === "password") {
-      password.type = "text";
-
-      togglePassword.textContent = "Hide";
-    } else {
-      password.type = "password";
-
-      togglePassword.textContent = "Show";
-    }
-  });
+  if (togglePassword) {
+    togglePassword.addEventListener("click", function () {
+      if (password.type === "password") {
+        password.type = "text";
+        togglePassword.textContent = "Hide";
+      } else {
+        password.type = "password";
+        togglePassword.textContent = "Show";
+      }
+    });
+  }
 
   /* =========================================
-       ERROR FUNCTION
+       SHOW ERROR
        ========================================= */
 
   function showError(input, errorId, message) {
     input.classList.add("input-error");
-
     input.classList.remove("input-success");
 
     const error = document.getElementById(errorId);
 
-    error.textContent = message;
-
-    error.classList.add("show");
+    if (error) {
+      error.textContent = message;
+      error.classList.add("show");
+    }
   }
 
   /* =========================================
@@ -69,18 +74,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function clearError(input, errorId) {
     input.classList.remove("input-error");
-
     input.classList.add("input-success");
 
     const error = document.getElementById(errorId);
 
-    error.textContent = "";
-
-    error.classList.remove("show");
+    if (error) {
+      error.textContent = "";
+      error.classList.remove("show");
+    }
   }
 
   /* =========================================
-       FULL NAME
+       FULL NAME VALIDATION
        ========================================= */
 
   function validateFullName() {
@@ -108,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* =========================================
-       DATE OF BIRTH
+       DATE OF BIRTH VALIDATION
        ========================================= */
 
   function validateDateOfBirth() {
@@ -142,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* =========================================
-       GENDER
+       GENDER VALIDATION
        ========================================= */
 
   function validateGender() {
@@ -158,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* =========================================
-       BLOOD GROUP
+       BLOOD GROUP VALIDATION
        ========================================= */
 
   function validateBloodGroup() {
@@ -178,29 +183,28 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* =========================================
-       LAST DONATION DATE
+       LAST DONATION DATE VALIDATION
        ========================================= */
 
   function validateLastDonationDate() {
-    /*
-     * If donor has never donated,
-     * the date is not required.
-     */
+    /* Never donated */
 
     if (neverDonated.checked) {
       lastDonationDate.value = "";
 
       lastDonationDate.classList.remove("input-error", "input-success");
 
-      document.getElementById("lastDonationDateError").classList.remove("show");
+      const error = document.getElementById("lastDonationDateError");
+
+      if (error) {
+        error.textContent = "";
+        error.classList.remove("show");
+      }
 
       return true;
     }
 
-    /*
-     * If donor has donated before,
-     * a date is required.
-     */
+    /* Donated before */
 
     if (lastDonationDate.value === "") {
       showError(
@@ -235,33 +239,35 @@ document.addEventListener("DOMContentLoaded", function () {
        NEVER DONATED CHECKBOX
        ========================================= */
 
-  neverDonated.addEventListener("change", function () {
-    if (neverDonated.checked) {
-      lastDonationDate.value = "";
+  if (neverDonated) {
+    neverDonated.addEventListener("change", function () {
+      if (neverDonated.checked) {
+        lastDonationDate.value = "";
 
-      lastDonationDate.disabled = true;
+        lastDonationDate.disabled = true;
 
-      lastDonationDate.classList.remove("input-error", "input-success");
+        lastDonationDate.classList.remove("input-error", "input-success");
 
-      document.getElementById("lastDonationDateError").textContent = "";
+        const error = document.getElementById("lastDonationDateError");
 
-      document.getElementById("lastDonationDateError").classList.remove("show");
-    } else {
-      lastDonationDate.disabled = false;
-    }
-  });
+        if (error) {
+          error.textContent = "";
+          error.classList.remove("show");
+        }
+      } else {
+        lastDonationDate.disabled = false;
+      }
+    });
+  }
 
   /* =========================================
-       EMAIL
+       EMAIL VALIDATION
        ========================================= */
 
   function validateEmail() {
     const value = email.value.trim();
 
-    /*
-     * Email is optional in the current
-     * donor table.
-     */
+    /* Email is optional */
 
     if (value === "") {
       email.classList.remove("input-error", "input-success");
@@ -283,15 +289,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* =========================================
-       PHONE NUMBER
+       PHONE VALIDATION
        ========================================= */
 
   function validatePhone() {
     const value = phoneNumber.value.trim();
 
-    /*
-     * Phone is optional.
-     */
+    /* Phone is optional */
 
     if (value === "") {
       phoneNumber.classList.remove("input-error", "input-success");
@@ -317,7 +321,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* =========================================
-       USERNAME
+       USERNAME VALIDATION
        ========================================= */
 
   function validateUsername() {
@@ -357,7 +361,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* =========================================
-       PASSWORD
+       PASSWORD VALIDATION
        ========================================= */
 
   function validatePassword() {
@@ -385,11 +389,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* =========================================
-       CONFIRM PASSWORD
+       CONFIRM PASSWORD VALIDATION
        ========================================= */
 
   function validateConfirmPassword() {
-    if (confirmPassword.value === "") {
+    const value = confirmPassword.value;
+
+    if (value === "") {
       showError(
         confirmPassword,
         "confirmPasswordError",
@@ -399,7 +405,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return false;
     }
 
-    if (confirmPassword.value !== password.value) {
+    if (value !== password.value) {
       showError(
         confirmPassword,
         "confirmPasswordError",
@@ -415,11 +421,18 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* =========================================
-       FORM SUBMIT
+       FORM SUBMISSION
        ========================================= */
 
   form.addEventListener("submit", function (event) {
+    /*
+     * Stop the browser from submitting
+     * before JavaScript validation.
+     */
+
     event.preventDefault();
+
+    /* Run all validations */
 
     const validFullName = validateFullName();
 
@@ -441,26 +454,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const validConfirmPassword = validateConfirmPassword();
 
-    if (
-      !validFullName ||
-      !validDate ||
-      !validGender ||
-      !validBloodGroup ||
-      !validLastDonation ||
-      !validEmail ||
-      !validPhone ||
-      !validUsername ||
-      !validPassword ||
-      !validConfirmPassword
-    ) {
+    /* Check validation result */
+
+    const formIsValid =
+      validFullName &&
+      validDate &&
+      validGender &&
+      validBloodGroup &&
+      validLastDonation &&
+      validEmail &&
+      validPhone &&
+      validUsername &&
+      validPassword &&
+      validConfirmPassword;
+
+    /* Stop if validation failed */
+
+    if (!formIsValid) {
       return;
     }
 
     /*
-     * PHP + MySQL registration will
-     * be connected in the next step.
+     * Everything is valid.
+     *
+     * Submit the form normally to PHP.
      */
 
-    alert("Registration form validation successful.");
+    form.submit();
   });
 });
